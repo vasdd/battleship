@@ -56,7 +56,10 @@ class CompassTest
     @Test
     final void testCompass()
     {
-//	assertEquals(Compass.NORTH, Compass('n'));
+	assertEquals('n', Compass.NORTH.getDirection());
+	assertEquals('s', Compass.SOUTH.getDirection());
+	assertEquals('e', Compass.EAST.getDirection());
+	assertEquals('o', Compass.WEST.getDirection());
     }
 
     /**
@@ -65,7 +68,10 @@ class CompassTest
     @Test
     final void testToString()
     {
-//	fail("Not yet implemented"); // TODO
+	assertEquals("n", Compass.NORTH.toString());
+	assertEquals("s", Compass.SOUTH.toString());
+	assertEquals("e", Compass.EAST.toString());
+	assertEquals("o", Compass.WEST.toString());
     }
 
 }

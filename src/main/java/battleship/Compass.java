@@ -14,6 +14,11 @@ public enum Compass
     {
 	this.c = c;
     }
+    
+    public char getDirection()
+    {
+	return c;
+    }
 
     public String toString()
     {
