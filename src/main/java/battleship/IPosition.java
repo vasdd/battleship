@@ -10,7 +10,7 @@ public interface IPosition
 
     int getColumn();
 
-    boolean equals(IPosition other);
+    boolean equals(Object other);
 
     boolean isAdjacentTo(IPosition other);
 

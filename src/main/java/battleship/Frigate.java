@@ -15,15 +15,19 @@ public class Frigate extends Ship
     public Frigate(Compass bearing, IPosition pos) throws IllegalArgumentException
     {
 	super(Frigate.NAME, bearing, pos);
-	if (bearing == Compass.NORTH || bearing == Compass.SOUTH)
+	switch (bearing)
+	{
+	case NORTH, SOUTH:
 	    for (int r = 0; r < SIZE; r++)
 		positions.add(new Position(pos.getRow() + r, pos.getColumn()));
-	else if (bearing == Compass.EAST || bearing == Compass.WEST)
+	    break;
+	case EAST, WEST:
 	    for (int c = 0; c < SIZE; c++)
 		positions.add(new Position(pos.getRow(), pos.getColumn() + c));
-	// else ... TODO: invalid bearing
-	else
+	    break;
+	default:
 	    throw new IllegalArgumentException("ERROR! invalid bearing for thr frigate");
+	}
     }
 
     /*

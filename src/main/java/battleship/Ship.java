@@ -20,12 +20,15 @@ public abstract class Ship implements IShip
      * @param bearing
      * @param pos
      */
-    public Ship(String category, Compass bearing, IPosition pos)
+    protected Ship(String category, Compass bearing, IPosition pos)
     {
+	assert bearing != null;
+	assert pos != null;
+	
 	this.category = category;
 	this.bearing = bearing;
 	this.pos = pos;
-	positions = new ArrayList<IPosition>();
+	positions = new ArrayList<>();
 
 	// Concrete classes must set the positions
     }
@@ -40,14 +43,6 @@ public abstract class Ship implements IShip
     {
 	return category;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see battleship.IShip#getSize()
-     */
-    @Override
-    public abstract int getSize();
 
     /*
      * (non-Javadoc)
@@ -153,6 +148,8 @@ public abstract class Ship implements IShip
     @Override
     public boolean occupies(IPosition pos)
     {
+	assert pos != null;
+	
 	for (int i = 0; i < getSize(); i++)
 	    if (positions.get(i).equals(pos))
 		return true;
@@ -167,6 +164,8 @@ public abstract class Ship implements IShip
     @Override
     public boolean tooCloseTo(IShip other)
     {
+	assert other != null;
+	
 	Iterator<IPosition> otherPos = other.getPositions();
 	while (otherPos.hasNext())
 	    if (tooCloseTo(otherPos.next()))
@@ -194,6 +193,8 @@ public abstract class Ship implements IShip
     @Override
     public void shoot(IPosition pos)
     {
+	assert pos != null;
+	
 	for (IPosition position : positions)
 	{
 	    if (position.equals(pos))

@@ -3,9 +3,11 @@
  */
 package battleship;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author britoeabreu
@@ -14,6 +16,11 @@ import java.util.Scanner;
  */
 public class Main
 {
+    static final Logger LOGGER = LogManager.getLogger();
+
+    private static final String GOODBYE_MESSAGE = "Bons ventos!";
+    static final int FULLFLEET = IFleet.SQUAREGRIDSIZE;
+
     /**
      * Strings to be used by the user
      */
@@ -28,27 +35,27 @@ public class Main
     private static final String VERTIROS = "ver";
     private static final String BATOTA = "mapa";
     private static final String STATUS = "estado";
-    private static final int FULLFLEET = IFleet.SQUAREGRIDSIZE;
 
     /**
      * @param args
      */
     public static void main(String[] args)
     {
-	System.out.println("***  Battleship  ***");
+	LOGGER.info("***  Battleship  ***");
 	try
 	{
-
+	    taskA();
+//	    taskB();
+//	    taskC();
+//	    taskD();
 	} catch (IllegalArgumentException excep)
 	{
-	    System.err.println("Caught IllegalArgumentException: " + excep.getMessage());
-
+	    LOGGER.error("Caught IllegalArgumentException: {}", excep.getMessage());
 	}
 
     }
 
     /////////////////////////////////////////////////////////////////////////////
-
     // hereafter one may find some code that can be converted to automatic tests,
     // as long as appropriate changes are made. It also shows that we should
     // develop our code incrementally eg. first the ships, then the fleet,
@@ -67,7 +74,7 @@ public class Main
 	    for (int i = 0; i < 3; i++)
 	    {
 		Position p = readPosition(in);
-		System.out.println(p.toString() + " " + s.occupies(p));
+		LOGGER.info("{} {}", p, s.occupies(p));
 	    }
 	}
     }
@@ -82,17 +89,21 @@ public class Main
 	String command = in.next();
 	while (!command.equals(DESISTIR))
 	{
-	    if (command.equals(NOVAFROTA))
+	    switch (command)
 	    {
+	    case NOVAFROTA:
 		fleet = buildFleet(in, FULLFLEET);
-	    } else if (command.equals(STATUS))
-	    {
-		printStatus(fleet);
+		break;
+	    case STATUS:
+		Fleet.printStatus(fleet);
+		break;
+	    default:
+		LOGGER.info("Que comando é esse??? Repete lá ...");
 	    }
 	    // The other commands are unknown in this task
 	    command = in.next();
 	}
-	System.out.println("Bons ventos!");
+	LOGGER.info(GOODBYE_MESSAGE);
     }
 
     /**
@@ -106,20 +117,24 @@ public class Main
 	String command = in.next();
 	while (!command.equals(DESISTIR))
 	{
-	    if (command.equals(NOVAFROTA))
+	    switch (command)
 	    {
+	    case NOVAFROTA:
 		fleet = buildFleet(in, FULLFLEET);
-	    } else if (command.equals(STATUS))
-	    {
-		printStatus(fleet);
-	    } else if (command.equals(BATOTA))
-	    {
-		System.out.println(fleet.toString());
+		break;
+	    case STATUS:
+		Fleet.printStatus(fleet);
+		break;
+	    case BATOTA:
+		LOGGER.info(fleet);
+		break;
+	    default:
+		LOGGER.info("Que comando é esse??? Repete lá ...");
 	    }
 	    // The other commands are unknown in this task
 	    command = in.next();
 	}
-	System.out.println("Bons ventos!");
+	LOGGER.info(GOODBYE_MESSAGE);
     }
 
     /**
@@ -133,46 +148,34 @@ public class Main
 	String command = in.next();
 	while (!command.equals(DESISTIR))
 	{
-	    if (command.equals(NOVAFROTA))
+	    switch (command)
 	    {
+	    case NOVAFROTA:
 		fleet = buildFleet(in, FULLFLEET);
 		game = new Game(fleet);
-	    } else if (command.equals(STATUS))
-	    {
-		printStatus(fleet);
-	    } else if (command.equals(BATOTA))
-	    {
-		printFleet(fleet);
-	    } else if (command.equals(RAJADA))
-	    {
+		break;
+	    case STATUS:
+		Fleet.printStatus(fleet);
+		break;
+	    case BATOTA:
+		Fleet.printFleet(fleet);
+		break;
+	    case RAJADA:
 		firingRound(in, game);
-		System.out.println("Hits: " + game.getHits() + " Inv: " + game.getInvalidShots() + " Rep: "
-			+ game.getRepeatedShots() + " Restam " + game.getRemainingShips() + " navios.");
+		LOGGER.info("Hits: {} Inv: {} Rep: {} Restam {} navios.", game.getHits(), game.getInvalidShots(),
+			game.getRepeatedShots(), game.getRemainingShips());
 		if (game.getRemainingShips() == 0)
-		    System.out.println("Maldito sejas, Java Sparrow, eu voltar-glub glub glub...");
-	    } else if (command.equals(VERTIROS))
-	    {
-		printAllValidShots(game);
+		    LOGGER.info("Maldito sejas, Java Sparrow, eu voltarei, glub glub glub...");
+		break;
+	    case VERTIROS:
+		Game.printAllValidShots(game);
+		break;
+	    default:
+		LOGGER.info("Que comando é esse??? Repete ...");
 	    }
 	    command = in.next();
 	}
-	System.out.println("Bons ventos!");
-    }
-
-    /**
-     * This operation shows the state of a fleet
-     * 
-     * @param fleet The fleet to be shown
-     */
-    private static void printStatus(IFleet fleet)
-    {
-	printAllShips(fleet);
-	printFloatingShips(fleet);
-	printShipsByCategory(fleet, "Galeao");
-	printShipsByCategory(fleet, "Fragata");
-	printShipsByCategory(fleet, "Nau");
-	printShipsByCategory(fleet, "Caravela");
-	printShipsByCategory(fleet, "Barca");
+	LOGGER.info(GOODBYE_MESSAGE);
     }
 
     /**
@@ -180,49 +183,13 @@ public class Main
      * 
      * @param ships The list of ships
      */
-    private static void printShips(List<IShip> ships)
+    static void printShips(List<IShip> ships)
     {
+	assert ships != null;
+
 	for (IShip ship : ships)
-	{
-	    System.out.print(ship);
-	}
-	System.out.println();
-    }
-
-    /**
-     * This operation prints all the ships of a fleet
-     * 
-     * @param fleet The fleet of ships
-     */
-    public static void printAllShips(IFleet fleet)
-    {
-	List<IShip> ships = fleet.listAllShips();
-	printShips(ships);
-    }
-
-    /**
-     * This operation prints all the ships of a fleet but not yet shot
-     * 
-     * @param fleet The fleet of ships
-     */
-    public static void printFloatingShips(IFleet fleet)
-    {
-	List<IShip> ships = fleet.listFloatingShips();
-	printShips(ships);
-    }
-
-    /**
-     * This operation prints all the ships of a fleet belonging to a particular
-     * category
-     * 
-     * @param fleet    The fleet of ships
-     * @param category The category of ships of interest
-     */
-    public static void printShipsByCategory(IFleet fleet, String category)
-    {
-	List<IShip> ships = fleet.listShipsLike(category);
-	printShips(ships);
-
+	    LOGGER.info(ship);
+	LOGGER.info("\n");
     }
 
     /**
@@ -234,6 +201,8 @@ public class Main
      */
     public static IFleet buildFleet(Scanner in, int n)
     {
+	assert in != null;
+
 	IFleet fleet = new Fleet();
 	int i = 0; // i represents the total of successfully created ships
 	while (i <= n)
@@ -245,14 +214,13 @@ public class Main
 		if (success)
 		    i++;
 		else
-		    System.out.println(
-			    "Falha na criacao de " + s.getCategory() + " " + s.getBearing() + " " + s.getPosition());
+		    LOGGER.info("Falha na criacao de {} {} {}", s.getCategory(), s.getBearing(), s.getPosition());
 	    } else
 	    {
-		System.out.println("Navio desconhecido!");
+		LOGGER.info("Navio desconhecido!");
 	    }
 	}
-	System.out.println(i + " navios adicionados com sucesso!");
+	LOGGER.info("{} navios adicionados com sucesso!", i);
 	return fleet;
     }
 
@@ -267,51 +235,33 @@ public class Main
 	String shipKind = in.next();
 	Position pos = readPosition(in);
 	char c = in.next().charAt(0);
-	Compass bearing = charToCompass(c);
+	Compass bearing = Compass.charToCompass(c);
 	return buildShip(shipKind, bearing, pos);
     }
 
-    private static Compass charToCompass(char ch)
-    {
-	Compass bearing;
-	switch (ch)
-	{
-	case 'n':
-	    bearing = Compass.NORTH;
-	    break;
-	case 's':
-	    bearing = Compass.SOUTH;
-	    break;
-	case 'e':
-	    bearing = Compass.EAST;
-	    break;
-	case 'o':
-	    bearing = Compass.WEST;
-	    break;
-	default: // Never happens unless input error
-	    bearing = Compass.NORTH;
-	    break;
-	}
-
-	return bearing;
-    }
-
+    /**
+     * @param shipKind
+     * @param bearing
+     * @param pos
+     * @return
+     */
     private static Ship buildShip(String shipKind, Compass bearing, Position pos)
     {
-	Ship sh;
-	if (shipKind.equals(BARCA))
-	    sh = new Barge(bearing, pos);
-	else if (shipKind.equals(CARAVELA))
-	    sh = new Caravel(bearing, pos);
-	else if (shipKind.equals(NAU))
-	    sh = new Carrack(bearing, pos);
-	else if (shipKind.equals(FRAGATA))
-	    sh = new Frigate(bearing, pos);
-	else if (shipKind.equals(GALEAO))
-	    sh = new Galleon(bearing, pos);
-	else
-	    sh = null;
-	return sh;
+	switch (shipKind)
+	{
+	case BARCA:
+	    return new Barge(bearing, pos);
+	case CARAVELA:
+	    return new Caravel(bearing, pos);
+	case NAU:
+	    return new Carrack(bearing, pos);
+	case FRAGATA:
+	    return new Frigate(bearing, pos);
+	case GALEAO:
+	    return new Galleon(bearing, pos);
+	default:
+	    return null;
+	}
     }
 
     /**
@@ -341,65 +291,7 @@ public class Main
 	    IPosition pos = readPosition(in);
 	    IShip sh = game.fire(pos);
 	    if (sh != null)
-		System.out.println("Mas... mas... " + sh.getCategory() + "s nao sao a prova de bala? :-(");
-	}
-
-    }
-
-    /**
-     * This operation prints a map showing valid shots that have been fired
-     * 
-     * @param game The context game while shots have been fired
-     */
-    public static void printAllValidShots(IGame game)
-    {
-	char[][] map = new char[FULLFLEET][FULLFLEET];
-	for (int r = 0; r < FULLFLEET; r++)
-	    for (int c = 0; c < FULLFLEET; c++)
-		map[r][c] = '.';
-
-	for (IPosition pos : game.getShots())
-	{
-	    map[pos.getRow()][pos.getColumn()] = 'X';
-	}
-
-	for (int row = 0; row < FULLFLEET; row++)
-	{
-	    for (int col = 0; col < FULLFLEET; col++)
-		System.out.print(map[row][col]);
-	    System.out.println();
-	}
-
-    }
-
-    /**
-     * This operation prints a map showing the fleet
-     * 
-     * @param fleet The fleet to be shown
-     */
-    private static void printFleet(IFleet fleet)
-    {
-	char[][] map = new char[FULLFLEET][FULLFLEET];
-	for (int r = 0; r < FULLFLEET; r++)
-	    for (int c = 0; c < FULLFLEET; c++)
-		map[r][c] = '.';
-
-	for (IShip sh : fleet.listAllShips())
-	{
-	    Iterator<IPosition> it = sh.getPositions();
-	    while (it.hasNext())
-	    {
-		IPosition pos = it.next();
-		map[pos.getRow()][pos.getColumn()] = '#';
-	    }
-
-	}
-
-	for (int row = 0; row < FULLFLEET; row++)
-	{
-	    for (int col = 0; col < FULLFLEET; col++)
-		System.out.print(map[row][col]);
-	    System.out.println();
+		LOGGER.info("Mas... mas... {}s nao sao a prova de bala? :-(", sh.getCategory());
 	}
 
     }

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * @author fba
  *
  */
-class FleetTest
+class FleetTest_
 {
 
     /**
@@ -24,6 +24,7 @@ class FleetTest
     @BeforeAll
     static void setUpBeforeClass() throws Exception
     {
+	
     }
 
     /**

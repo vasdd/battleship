@@ -11,20 +11,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 /**
  * @author fba
  *
  */
 
-class CaravelTest {
+class CaravelTest
+{
     static Caravel cN, cS, cE, cW;
 
     /**
      * @throws java.lang.Exception
      */
     @BeforeAll
-    static void setUpBeforeClass() throws Exception {
+    static void setUpBeforeClass() throws Exception
+    {
 	cN = new Caravel(Compass.NORTH, new Position(5, 5));
 	cS = new Caravel(Compass.SOUTH, new Position(5, 5));
 	cE = new Caravel(Compass.EAST, new Position(5, 5));
@@ -35,7 +36,8 @@ class CaravelTest {
      * @throws java.lang.Exception
      */
     @AfterAll
-    static void tearDownAfterClass() throws Exception {
+    static void tearDownAfterClass() throws Exception
+    {
 
     }
 
@@ -43,7 +45,8 @@ class CaravelTest {
      * @throws java.lang.Exception
      */
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() throws Exception
+    {
 
     }
 
@@ -51,7 +54,8 @@ class CaravelTest {
      * @throws java.lang.Exception
      */
     @AfterEach
-    void tearDown() throws Exception {
+    void tearDown() throws Exception
+    {
 
     }
 
@@ -59,7 +63,8 @@ class CaravelTest {
      * Test method for {@link battleship.Caravel#getSize()}.
      */
     @Test
-    final void testGetSize() {
+    final void testGetSize()
+    {
 	assertEquals(2, cN.getSize());
 	assertEquals(2, cS.getSize());
 	assertEquals(2, cE.getSize());
@@ -71,7 +76,8 @@ class CaravelTest {
      * {@link battleship.Caravel#Caravel(battleship.Compass, battleship.IPosition)}.
      */
     @Test
-    final void testCaravel() {
+    final void testCaravel()
+    {
 	assertNotNull(cN);
 	assertEquals(Compass.NORTH, cN.getBearing());
 	assertEquals(5, cN.getTopMostPos());
@@ -87,8 +93,25 @@ class CaravelTest {
 	assertNotNull(cW);
 	assertEquals(Compass.WEST, cW.getBearing());
 	assertEquals(5, cW.getLeftMostPos());
+    }
 
+    /**
+     * Test method for
+     * {@link battleship.Caravel#Caravel(battleship.Compass, battleship.IPosition)}.
+     */
+    @Test
+    final void testCaravelIllegalArgumentException()
+    {
 	assertThrows(IllegalArgumentException.class, () -> new Caravel(Compass.UNKNOWN, new Position(0, 0)));
+    }
+
+    /**
+     * Test method for
+     * {@link battleship.Caravel#Caravel(battleship.Compass, battleship.IPosition)}.
+     */
+    @Test
+    final void testCaravelNullPointerException()
+    {
 	assertThrows(NullPointerException.class, () -> new Caravel(null, new Position(0, 0)));
 	assertThrows(NullPointerException.class, () -> new Caravel(null, null));
     }

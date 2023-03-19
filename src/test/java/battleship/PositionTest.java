@@ -1,143 +1,86 @@
-/**
- * 
- */
 package battleship;
-
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- * @author fba
- *
- */
-class PositionTest
-{
+class PositionTest {
+    private Position position;
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeAll
-    static void setUpBeforeClass() throws Exception
-    {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterAll
-    static void tearDownAfterClass() throws Exception
-    {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
     @BeforeEach
-    void setUp() throws Exception
-    {
+    void setUp() throws Exception {
+        position = new Position(2, 3);
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterEach
-    void tearDown() throws Exception
-    {
-    }
-
-    /**
-     * Test method for {@link battleship.Position#Position(int, int)}.
-     */
     @Test
-    final void testPosition()
-    {
-	fail("Not yet implemented"); // TODO
+    void testGetPositionRow() {
+        assertEquals(2, position.getRow());
     }
 
-    /**
-     * Test method for {@link battleship.Position#getRow()}.
-     */
     @Test
-    final void testGetRow()
-    {
-	fail("Not yet implemented"); // TODO
+    void testGetPositionColumn() {
+        assertEquals(3, position.getColumn());
     }
 
-    /**
-     * Test method for {@link battleship.Position#getColumn()}.
-     */
     @Test
-    final void testGetColumn()
-    {
-	fail("Not yet implemented"); // TODO
+    void testEquals() {
+        Position position2 = new Position(2, 3);
+        assertTrue(position.equals(position2));
+        assertFalse(position.equals(null));
+        assertFalse(position.equals("not a position object"));
+        assertFalse(position.equals(new Position(2, 4)));
+        assertFalse(position.equals(new Position(1, 3)));
     }
 
-    /**
-     * Test method for {@link battleship.Position#equals(battleship.IPosition)}.
-     */
     @Test
-    final void testEqualsIPosition()
-    {
-	fail("Not yet implemented"); // TODO
+    void testHashCode() {
+        assertEquals(position.hashCode(), new Position(2, 3).hashCode());
+        assertNotEquals(position.hashCode(), new Position(1, 3).hashCode());
     }
 
-    /**
-     * Test method for {@link battleship.Position#isAdjacentTo(battleship.IPosition)}.
-     */
     @Test
-    final void testIsAdjacentTo()
-    {
-	fail("Not yet implemented"); // TODO
+    void testIsAdjacentTo() {
+        assertTrue(position.isAdjacentTo(new Position(1, 2)));
+        assertTrue(position.isAdjacentTo(new Position(1, 3)));
+        assertTrue(position.isAdjacentTo(new Position(1, 4)));
+        assertTrue(position.isAdjacentTo(new Position(2, 2)));
+        assertTrue(position.isAdjacentTo(new Position(2, 4)));
+        assertTrue(position.isAdjacentTo(new Position(3, 2)));
+        assertTrue(position.isAdjacentTo(new Position(3, 3)));
+        assertTrue(position.isAdjacentTo(new Position(3, 4)));
+        assertFalse(position.isAdjacentTo(new Position(1, 1)));
+        assertFalse(position.isAdjacentTo(new Position(4, 4)));
     }
 
-    /**
-     * Test method for {@link battleship.Position#occupy()}.
-     */
     @Test
-    final void testOccupy()
-    {
-	fail("Not yet implemented"); // TODO
+    void testOccupy() {
+        assertFalse(position.isOccupied());
+        position.occupy();
+        assertTrue(position.isOccupied());
     }
 
-    /**
-     * Test method for {@link battleship.Position#shoot()}.
-     */
     @Test
-    final void testShoot()
-    {
-	fail("Not yet implemented"); // TODO
+    void testShoot() {
+        assertFalse(position.isHit());
+        position.shoot();
+        assertTrue(position.isHit());
     }
 
-    /**
-     * Test method for {@link battleship.Position#isOccupied()}.
-     */
     @Test
-    final void testIsOccupied()
-    {
-	fail("Not yet implemented"); // TODO
+    void testIsOccupied() {
+        assertFalse(position.isOccupied());
+        position.occupy();
+        assertTrue(position.isOccupied());
     }
 
-    /**
-     * Test method for {@link battleship.Position#isHit()}.
-     */
     @Test
-    final void testIsHit()
-    {
-	fail("Not yet implemented"); // TODO
+    void testIsHit() {
+        assertFalse(position.isHit());
+        position.shoot();
+        assertTrue(position.isHit());
     }
 
-    /**
-     * Test method for {@link battleship.Position#toString()}.
-     */
     @Test
-    final void testToString()
-    {
-	fail("Not yet implemented"); // TODO
+    void testToString() {
+        assertEquals("Linha = 2 Coluna = 3", position.toString());
     }
-
 }

@@ -24,7 +24,7 @@ public class Game implements IGame
      */
     public Game(IFleet fleet)
     {
-	shots = new ArrayList<IPosition>();
+	shots = new ArrayList<>();
 	countInvalidShots = 0;
 	countRepeatedShots = 0;
 	this.fleet = fleet;
@@ -143,6 +143,30 @@ public class Game implements IGame
 	    if (shots.get(i).equals(pos))
 		return true;
 	return false;
+    }
+
+    /**
+     * This operation prints a map showing valid shots that have been fired
+     * 
+     * @param game The context game while shots have been fired
+     */
+    public static void printAllValidShots(IGame game)
+    {
+        char[][] map = new char[Main.FULLFLEET][Main.FULLFLEET];
+        for (int r = 0; r < Main.FULLFLEET; r++)
+            for (int c = 0; c < Main.FULLFLEET; c++)
+        	map[r][c] = '.';
+    
+        for (IPosition pos : game.getShots())
+            map[pos.getRow()][pos.getColumn()] = 'X';
+    
+        for (int row = 0; row < Main.FULLFLEET; row++)
+        {
+            for (int col = 0; col < Main.FULLFLEET; col++)
+        	Main.LOGGER.info(map[row][col]);
+            Main.LOGGER.info("\n");
+        }
+    
     }
 
 }

@@ -3,6 +3,8 @@
  */
 package battleship;
 
+import java.util.Objects;
+
 public class Position implements IPosition
 {
     private int row;
@@ -43,15 +45,27 @@ public class Position implements IPosition
 	return column;
     }
 
+
+    @Override
+    public int hashCode()
+    {
+	return Objects.hash(column, isHit, isOccupied, row);
+    }
+
     /*
      * (non-Javadoc)
      * 
-     * @see battleship.IPosition#equals(battleship.IPosition)
+     * @see battleship.IPosition#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(IPosition other)
+    public boolean equals(Object otherPosition)
     {
-	return (this.getRow() == other.getRow() && this.getColumn() == other.getColumn());
+	if (this == otherPosition)
+	    return true;
+	if (otherPosition instanceof IPosition other)
+	    return (this.getRow() == other.getRow() && this.getColumn() == other.getColumn());
+	else
+	    return false;
     }
 
     /*

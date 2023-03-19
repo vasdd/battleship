@@ -35,7 +35,6 @@ public class Galleon extends Ship
 	    break;
 	    
 	default:
-	    // TODO: invalid bearing
 	    throw new IllegalArgumentException("ERROR! invalid bearing for the galleon");
 	}
     }

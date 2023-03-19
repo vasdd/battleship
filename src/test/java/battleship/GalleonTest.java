@@ -72,7 +72,8 @@ class GalleonTest
     }
 
     /**
-     * Test method for {@link battleship.Galleon#Galleon(battleship.Compass, battleship.IPosition)}.
+     * Test method for
+     * {@link battleship.Galleon#Galleon(battleship.Compass, battleship.IPosition)}.
      */
     @Test
     final void testGalleon()
@@ -92,11 +93,27 @@ class GalleonTest
 	assertNotNull(gW);
 	assertEquals(Compass.WEST, gW.getBearing());
 	assertEquals(5, gW.getLeftMostPos());
+    }
 
+    /**
+     * Test method for
+     * {@link battleship.Galleon#Galleon(battleship.Compass, battleship.IPosition)}.
+     */
+    @Test
+    final void testGalleonIllegalArgumentException()
+    {
 	assertThrows(IllegalArgumentException.class, () -> new Galleon(Compass.UNKNOWN, new Position(0, 0)));
+    }
+
+    /**
+     * Test method for
+     * {@link battleship.Galleon#Galleon(battleship.Compass, battleship.IPosition)}.
+     */
+    @Test
+    final void testGalleonNullPointerException()
+    {
 	assertThrows(NullPointerException.class, () -> new Galleon(null, new Position(0, 0)));
 	assertThrows(NullPointerException.class, () -> new Galleon(null, null));
-
     }
 
     /**

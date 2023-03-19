@@ -20,8 +20,34 @@ public enum Compass
 	return c;
     }
 
+    @Override
     public String toString()
     {
 	return "" + c;
+    }
+
+    static Compass charToCompass(char ch)
+    {
+        Compass bearing;
+        switch (ch)
+        {
+        case 'n':
+            bearing = NORTH;
+            break;
+        case 's':
+            bearing = SOUTH;
+            break;
+        case 'e':
+            bearing = EAST;
+            break;
+        case 'o':
+            bearing = WEST;
+            break;
+        default: // Never happens unless input error
+            bearing = NORTH;
+            break;
+        }
+    
+        return bearing;
     }
 }
