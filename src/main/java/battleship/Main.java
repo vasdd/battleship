@@ -71,11 +71,12 @@ public class Main
 	while (in.hasNext())
 	{
 	    Ship s = readShip(in);
-	    for (int i = 0; i < 3; i++)
-	    {
-		Position p = readPosition(in);
-		LOGGER.info("{} {}", p, s.occupies(p));
-	    }
+	    if (s != null)
+		for (int i = 0; i < 3; i++)
+		{
+		    Position p = readPosition(in);
+		    LOGGER.info("{} {}", p, s.occupies(p));
+		}
 	}
     }
 
@@ -155,20 +156,27 @@ public class Main
 		game = new Game(fleet);
 		break;
 	    case STATUS:
-		Fleet.printStatus(fleet);
+		if (fleet != null)
+		    Fleet.printStatus(fleet);
 		break;
 	    case BATOTA:
-		Fleet.printFleet(fleet);
+		if (fleet != null)
+		    Fleet.printFleet(fleet);
 		break;
 	    case RAJADA:
-		firingRound(in, game);
-		LOGGER.info("Hits: {} Inv: {} Rep: {} Restam {} navios.", game.getHits(), game.getInvalidShots(),
-			game.getRepeatedShots(), game.getRemainingShips());
-		if (game.getRemainingShips() == 0)
-		    LOGGER.info("Maldito sejas, Java Sparrow, eu voltarei, glub glub glub...");
+		if (game != null)
+		{
+		    firingRound(in, game);
+
+		    LOGGER.info("Hits: {} Inv: {} Rep: {} Restam {} navios.", game.getHits(), game.getInvalidShots(),
+			    game.getRepeatedShots(), game.getRemainingShips());
+		    if (game.getRemainingShips() == 0)
+			LOGGER.info("Maldito sejas, Java Sparrow, eu voltarei, glub glub glub...");
+		}
 		break;
 	    case VERTIROS:
-		Game.printAllValidShots(game);
+		if (game != null)
+		    game.printAllValidShots();
 		break;
 	    default:
 		LOGGER.info("Que comando é esse??? Repete ...");

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * @author fba
  *
  */
-class FleetTest_
+class FleetTest
 {
 
     /**

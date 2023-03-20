@@ -150,14 +150,14 @@ public class Game implements IGame
      * 
      * @param game The context game while shots have been fired
      */
-    public static void printAllValidShots(IGame game)
+    public void printAllValidShots()
     {
         char[][] map = new char[Main.FULLFLEET][Main.FULLFLEET];
         for (int r = 0; r < Main.FULLFLEET; r++)
             for (int c = 0; c < Main.FULLFLEET; c++)
         	map[r][c] = '.';
     
-        for (IPosition pos : game.getShots())
+        for (IPosition pos : this.getShots())
             map[pos.getRow()][pos.getColumn()] = 'X';
     
         for (int row = 0; row < Main.FULLFLEET; row++)

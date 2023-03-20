@@ -20,4 +20,6 @@ public interface IGame
     int getSunkShips();
 
     int getRemainingShips();
+
+    void printAllValidShots();
 }

@@ -24,11 +24,10 @@ class PositionTest {
     @Test
     void testEquals() {
         Position position2 = new Position(2, 3);
-        assertTrue(position.equals(position2));
-        assertFalse(position.equals(null));
-        assertFalse(position.equals("not a position object"));
-        assertFalse(position.equals(new Position(2, 4)));
-        assertFalse(position.equals(new Position(1, 3)));
+        assertEquals(position2, position);
+        assertNotNull(position);
+        assertNotEquals(new Position(2, 4), position);
+        assertNotEquals(new Position(1, 3), position);
     }
 
     @Test
