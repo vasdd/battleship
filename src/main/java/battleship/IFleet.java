@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IFleet
 {
-    int SQUAREGRIDSIZE = 10;
+    Integer SQUAREGRIDSIZE = 10;
 
     boolean addShip(IShip s);
 

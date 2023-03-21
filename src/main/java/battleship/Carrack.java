@@ -5,7 +5,7 @@ package battleship;
 
 public class Carrack extends Ship
 {
-    private static final int SIZE = 3;
+    private static final Integer SIZE = 3;
     private static final String NAME = "Nau";
 
     /**
@@ -36,7 +36,7 @@ public class Carrack extends Ship
      * @see battleship.Ship#getSize()
      */
     @Override
-    public int getSize()
+    public Integer getSize()
     {
 	return Carrack.SIZE;
     }

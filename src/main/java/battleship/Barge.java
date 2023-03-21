@@ -5,7 +5,7 @@ package battleship;
 
 public class Barge extends Ship
 {
-    private static final int SIZE = 1;
+    private static final Integer SIZE = 1;
     private static final String NAME = "Barca";
 
     /**
@@ -19,7 +19,7 @@ public class Barge extends Ship
     }
 
     @Override
-    public int getSize()
+    public Integer getSize()
     {
 	return SIZE;
     }

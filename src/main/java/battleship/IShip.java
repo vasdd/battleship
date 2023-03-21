@@ -9,7 +9,7 @@ public interface IShip
 {
     String getCategory();
 
-    abstract int getSize();
+    Integer getSize();
 
     IPosition getPosition();
 
