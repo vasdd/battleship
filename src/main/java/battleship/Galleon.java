@@ -54,42 +54,42 @@ public class Galleon extends Ship
     {
 	for (int i = 0; i < 3; i++)
 	{
-	    positions.add(new Position(pos.getRow(), pos.getColumn() + i));
+	    getPositions().add(new Position(pos.getRow(), pos.getColumn() + i));
 	}
-	positions.add(new Position(pos.getRow() + 1, pos.getColumn() + 1));
-	positions.add(new Position(pos.getRow() + 2, pos.getColumn() + 1));
+	getPositions().add(new Position(pos.getRow() + 1, pos.getColumn() + 1));
+	getPositions().add(new Position(pos.getRow() + 2, pos.getColumn() + 1));
     }
 
     private void fillSouth(IPosition pos)
     {
 	for (int i = 0; i < 2; i++)
 	{
-	    positions.add(new Position(pos.getRow() + i, pos.getColumn()));
+	    getPositions().add(new Position(pos.getRow() + i, pos.getColumn()));
 	}
 	for (int j = 2; j < 5; j++)
 	{
-	    positions.add(new Position(pos.getRow() + 2, pos.getColumn() + j - 3));
+	    getPositions().add(new Position(pos.getRow() + 2, pos.getColumn() + j - 3));
 	}
     }
 
     private void fillEast(IPosition pos)
     {
-	positions.add(new Position(pos.getRow(), pos.getColumn()));
+	getPositions().add(new Position(pos.getRow(), pos.getColumn()));
 	for (int i = 1; i < 4; i++)
 	{
-	    positions.add(new Position(pos.getRow() + 1, pos.getColumn() + i - 3));
+	    getPositions().add(new Position(pos.getRow() + 1, pos.getColumn() + i - 3));
 	}
-	positions.add(new Position(pos.getRow() + 2, pos.getColumn()));
+	getPositions().add(new Position(pos.getRow() + 2, pos.getColumn()));
     }
 
     private void fillWest(IPosition pos)
     {
-	positions.add(new Position(pos.getRow(), pos.getColumn()));
+	getPositions().add(new Position(pos.getRow(), pos.getColumn()));
 	for (int i = 1; i < 4; i++)
 	{
-	    positions.add(new Position(pos.getRow() + 1, pos.getColumn() + i - 1));
+	    getPositions().add(new Position(pos.getRow() + 1, pos.getColumn() + i - 1));
 	}
-	positions.add(new Position(pos.getRow() + 2, pos.getColumn()));
+	getPositions().add(new Position(pos.getRow() + 2, pos.getColumn()));
     }
 
 }

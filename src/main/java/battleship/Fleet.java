@@ -9,6 +9,19 @@ import java.util.List;
 
 public class Fleet implements IFleet
 {
+    /**
+     * This operation prints all the given ships
+     * 
+     * @param ships The list of ships
+     */
+    static void printShips(List<IShip> ships)
+    {
+	for (IShip ship : ships)
+	    System.out.println(ship);
+    }
+
+    // -----------------------------------------------------
+
     private List<IShip> ships;
 
     public Fleet()
@@ -16,6 +29,12 @@ public class Fleet implements IFleet
 	ships = new ArrayList<>();
     }
 
+    @Override
+    public List<IShip> getShips()
+    {
+	return ships;
+    }
+    
     /*
      * (non-Javadoc)
      * 
@@ -25,7 +44,7 @@ public class Fleet implements IFleet
     public boolean addShip(IShip s)
     {
 	boolean result = false;
-	if ((ships.size() <= SQUAREGRIDSIZE) && (isInsideMap(s)) && (!colisionRisk(s)))
+	if ((ships.size() <= FLEET_SIZE) && (isInsideBoard(s)) && (!colisionRisk(s)))
 	{
 	    ships.add(s);
 	    result = true;
@@ -36,51 +55,33 @@ public class Fleet implements IFleet
     /*
      * (non-Javadoc)
      * 
-     * @see battleship.IFleet#listShipsLike(java.lang.String)
+     * @see battleship.IFleet#getShipsLike(java.lang.String)
      */
     @Override
-    public List<IShip> listShipsLike(String category)
+    public List<IShip> getShipsLike(String category)
     {
 	List<IShip> shipsLike = new ArrayList<>();
 	for (IShip s : ships)
-	{
 	    if (s.getCategory().equals(category))
 		shipsLike.add(s);
-	}
+	
 	return shipsLike;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see battleship.IFleet#listFloatingShips()
+     * @see battleship.IFleet#getFloatingShips()
      */
     @Override
-    public List<IShip> listFloatingShips()
+    public List<IShip> getFloatingShips()
     {
 	List<IShip> floatingShips = new ArrayList<>();
 	for (IShip s : ships)
-	{
 	    if (s.stillFloating())
 		floatingShips.add(s);
-	}
-	return floatingShips;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see battleship.IFleet#listAllShips()
-     */
-    @Override
-    public List<IShip> listAllShips()
-    {
-	List<IShip> allShips = new ArrayList<>();
-	for (IShip s : ships)
-	{
-	    allShips.add(s);
-	}
-	return allShips;
+	return floatingShips;
     }
 
     /*
@@ -97,10 +98,10 @@ public class Fleet implements IFleet
 	return null;
     }
 
-    private boolean isInsideMap(IShip s)
+    private boolean isInsideBoard(IShip s)
     {
-	return (s.getLeftMostPos() >= 0 && s.getRightMostPos() <= SQUAREGRIDSIZE - 1 && s.getTopMostPos() >= 0
-		&& s.getBottomMostPos() <= SQUAREGRIDSIZE - 1);
+	return (s.getLeftMostPos() >= 0 && s.getRightMostPos() <= BOARD_SIZE - 1 && s.getTopMostPos() >= 0
+		&& s.getBottomMostPos() <= BOARD_SIZE - 1);
     }
 
     private boolean colisionRisk(IShip s)
@@ -113,56 +114,19 @@ public class Fleet implements IFleet
 	return false;
     }
 
-    /**
-     * This operation prints a map showing the fleet
-     * 
-     * @param fleet The fleet to be shown
-     */
-    static void printFleet(IFleet fleet)
-    {
-        assert fleet != null;
-        
-        char[][] map = new char[Main.FULLFLEET][Main.FULLFLEET];
-        for (int r = 0; r < Main.FULLFLEET; r++)
-            for (int c = 0; c < Main.FULLFLEET; c++)
-        	map[r][c] = '.';
-    
-        for (IShip sh : fleet.listAllShips())
-        {
-            Iterator<IPosition> it = sh.getPositions();
-            while (it.hasNext())
-            {
-        	IPosition pos = it.next();
-        	map[pos.getRow()][pos.getColumn()] = '#';
-            }
-    
-        }
-    
-        for (int row = 0; row < Main.FULLFLEET; row++)
-        {
-            for (int col = 0; col < Main.FULLFLEET; col++)
-        	Main.LOGGER.info(map[row][col]);
-            Main.LOGGER.info("\n");
-        }
-    
-    }
 
     /**
      * This operation shows the state of a fleet
-     * 
-     * @param fleet The fleet to be shown
      */
-    static void printStatus(IFleet fleet)
+    public void printStatus()
     {
-        assert fleet != null;
-        
-        printAllShips(fleet);
-        printFloatingShips(fleet);
-        printShipsByCategory(fleet, "Galeao");
-        printShipsByCategory(fleet, "Fragata");
-        printShipsByCategory(fleet, "Nau");
-        printShipsByCategory(fleet, "Caravela");
-        printShipsByCategory(fleet, "Barca");
+	printAllShips();
+	printFloatingShips();
+	printShipsByCategory("Galeao");
+	printShipsByCategory("Fragata");
+	printShipsByCategory("Nau");
+	printShipsByCategory("Caravela");
+	printShipsByCategory("Barca");
     }
 
     /**
@@ -172,14 +136,11 @@ public class Fleet implements IFleet
      * @param fleet    The fleet of ships
      * @param category The category of ships of interest
      */
-    public static void printShipsByCategory(IFleet fleet, String category)
+    public void printShipsByCategory(String category)
     {
-        assert fleet != null;
-        assert category != null;
-        
-        List<IShip> ships = fleet.listShipsLike(category);
-        Main.printShips(ships);
-    
+	assert category != null;
+
+	printShips(getShipsLike(category));
     }
 
     /**
@@ -187,12 +148,9 @@ public class Fleet implements IFleet
      * 
      * @param fleet The fleet of ships
      */
-    public static void printFloatingShips(IFleet fleet)
+    public void printFloatingShips()
     {
-        assert fleet != null;
-        
-        List<IShip> ships = fleet.listFloatingShips();
-        Main.printShips(ships);
+	printShips(getFloatingShips());
     }
 
     /**
@@ -200,10 +158,9 @@ public class Fleet implements IFleet
      * 
      * @param fleet The fleet of ships
      */
-    public static void printAllShips(IFleet fleet)
+    void printAllShips()
     {
-        List<IShip> ships = fleet.listAllShips();
-        Main.printShips(ships);
+	printShips(ships);
     }
 
 }

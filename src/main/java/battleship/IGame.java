@@ -21,5 +21,7 @@ public interface IGame
 
     int getRemainingShips();
 
-    void printAllValidShots();
+    void printValidShots();
+    
+    void printFleet();
 }

@@ -3,19 +3,23 @@
  */
 package battleship;
 
+import java.util.Iterator;
 import java.util.List;
 
 public interface IFleet
 {
-    Integer SQUAREGRIDSIZE = 10;
+    Integer BOARD_SIZE = 10;
+    Integer FLEET_SIZE = 10;
 
+    List<IShip> getShips();
+    
     boolean addShip(IShip s);
 
-    List<IShip> listShipsLike(String category);
+    List<IShip> getShipsLike(String category);
 
-    List<IShip> listFloatingShips();
-
-    List<IShip> listAllShips();
+    List<IShip> getFloatingShips();
 
     IShip shipAt(IPosition pos);
+    
+    void printStatus();
 }

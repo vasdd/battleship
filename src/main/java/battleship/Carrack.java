@@ -19,11 +19,11 @@ public class Carrack extends Ship
 	{
 	case NORTH, SOUTH:
 	    for (int r = 0; r < SIZE; r++)
-		positions.add(new Position(pos.getRow() + r, pos.getColumn()));
+		getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
 	    break;
 	case EAST, WEST:
 	    for (int c = 0; c < SIZE; c++)
-		positions.add(new Position(pos.getRow(), pos.getColumn() + c));
+		getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
 	    break;
 	default:
 	    throw new IllegalArgumentException("ERROR! invalid bearing for the carrack");

@@ -43,9 +43,8 @@ public enum Compass
         case 'o':
             bearing = WEST;
             break;
-        default: // Never happens unless input error
-            bearing = NORTH;
-            break;
+        default:
+            bearing = UNKNOWN;
         }
     
         return bearing;

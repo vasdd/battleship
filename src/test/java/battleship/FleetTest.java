@@ -70,7 +70,7 @@ class FleetTest
     }
 
     /**
-     * Test method for {@link battleship.Fleet#listShipsLike(java.lang.String)}.
+     * Test method for {@link battleship.Fleet#getShipsLike(java.lang.String)}.
      */
     @Test
     final void testListShipsLike()

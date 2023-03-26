@@ -1,6 +1,3 @@
-/**
- * 
- */
 package battleship;
 
 public class Barge extends Ship
@@ -15,7 +12,7 @@ public class Barge extends Ship
     public Barge(Compass bearing, IPosition pos)
     {
 	super(Barge.NAME, bearing, pos);
-	positions.add(new Position(pos.getRow(), pos.getColumn()));
+	getPositions().add(new Position(pos.getRow(), pos.getColumn()));
     }
 
     @Override

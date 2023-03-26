@@ -4,6 +4,7 @@
 package battleship;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,15 +13,17 @@ import java.util.List;
  */
 public class Game implements IGame
 {
-    private List<IPosition> shots;
     private IFleet fleet;
-    private int countInvalidShots;
-    private int countRepeatedShots;
-    private int countHits;
-    private int countSinks;
+    private List<IPosition> shots;
+    
+    private Integer countInvalidShots;
+    private Integer countRepeatedShots;
+    private Integer countHits;
+    private Integer countSinks;
+
 
     /**
-     * 
+     * @param fleet
      */
     public Game(IFleet fleet)
     {
@@ -38,7 +41,7 @@ public class Game implements IGame
     @Override
     public IShip fire(IPosition pos)
     {
-	if (!validateShot(pos))
+	if (!validShot(pos))
 	    countInvalidShots++;
 	else
 	{ // valid shot!
@@ -126,15 +129,14 @@ public class Game implements IGame
     @Override
     public int getRemainingShips()
     {
-	List<IShip> floatingShips = fleet.listFloatingShips();
+	List<IShip> floatingShips = fleet.getFloatingShips();
 	return floatingShips.size();
     }
 
-    @SuppressWarnings("static-access")
-    private boolean validateShot(IPosition pos)
+    private boolean validShot(IPosition pos)
     {
-	return (pos.getRow() >= 0 && pos.getRow() <= fleet.SQUAREGRIDSIZE && pos.getColumn() >= 0
-		&& pos.getColumn() <= fleet.SQUAREGRIDSIZE);
+	return (pos.getRow() >= 0 && pos.getRow() <= Fleet.BOARD_SIZE && pos.getColumn() >= 0
+		&& pos.getColumn() <= Fleet.BOARD_SIZE);
     }
 
     private boolean repeatedShot(IPosition pos)
@@ -145,28 +147,48 @@ public class Game implements IGame
 	return false;
     }
 
-    /**
-     * This operation prints a map showing valid shots that have been fired
-     * 
-     * @param game The context game while shots have been fired
-     */
-    public void printAllValidShots()
+    
+    public void printBoard(List<IPosition> positions, Character marker)
     {
-        char[][] map = new char[Main.FULLFLEET][Main.FULLFLEET];
-        for (int r = 0; r < Main.FULLFLEET; r++)
-            for (int c = 0; c < Main.FULLFLEET; c++)
-        	map[r][c] = '.';
+	char[][] map = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];
+	
+	for (int r = 0; r < Fleet.BOARD_SIZE; r++)
+	    for (int c = 0; c < Fleet.BOARD_SIZE; c++)
+		map[r][c] = '.';
+
+	for (IPosition pos : positions)
+	    map[pos.getRow()][pos.getColumn()] = marker;
+
+	for (int row = 0; row < Fleet.BOARD_SIZE; row++)
+	{
+	    for (int col = 0; col < Fleet.BOARD_SIZE; col++)
+		System.out.print(map[row][col]);
+	    System.out.println();
+	}
+
+    }
     
-        for (IPosition pos : this.getShots())
-            map[pos.getRow()][pos.getColumn()] = 'X';
     
-        for (int row = 0; row < Main.FULLFLEET; row++)
-        {
-            for (int col = 0; col < Main.FULLFLEET; col++)
-        	Main.LOGGER.info(map[row][col]);
-            Main.LOGGER.info("\n");
-        }
+    /**
+     * Prints the board showing valid shots that have been fired
+     */
+    public void printValidShots()
+    {
+	printBoard(getShots(), 'X');
+    }
+
     
+    /**
+     * Prints the board showing the fleet
+     */    
+    public void printFleet()
+    {
+	List<IPosition> shipPositions = new ArrayList<IPosition>();
+	
+	for (IShip s: fleet.getShips())
+	    shipPositions.addAll(s.getPositions());
+	    
+	printBoard(shipPositions, '#');
     }
 
 }

@@ -41,7 +41,7 @@ class BargeTest {
     @Test
     @DisplayName("Test getPositions method")
     void testGetPositions() {
-        Iterator<IPosition> positions = barge.getPositions();
+        Iterator<IPosition> positions = barge.getPositions().iterator();
         assertTrue(positions.hasNext());
         IPosition position = positions.next();
         assertEquals(1, position.getRow());

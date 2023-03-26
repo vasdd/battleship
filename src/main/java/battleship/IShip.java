@@ -4,12 +4,15 @@
 package battleship;
 
 import java.util.Iterator;
+import java.util.List;
 
 public interface IShip
 {
     String getCategory();
 
     Integer getSize();
+    
+    List<IPosition> getPositions();
 
     IPosition getPosition();
 
@@ -28,8 +31,8 @@ public interface IShip
     boolean occupies(IPosition pos);
 
     boolean tooCloseTo(IShip other);
-
-    Iterator<IPosition> getPositions();
+    
+    boolean tooCloseTo(IPosition pos);
 
     void shoot(IPosition pos);
 }
