@@ -17,11 +17,19 @@ public class Carrack extends Ship
 	super(Carrack.NAME, bearing, pos);
 	switch (bearing)
 	{
-	case NORTH, SOUTH:
+	case SOUTH:
 	    for (int r = 0; r < SIZE; r++)
 		getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
 	    break;
-	case EAST, WEST:
+	case NORTH:    
+	    for (int r = 0; r < SIZE; r++)
+		getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+	    break;
+	case EAST:
+	    for (int c = 0; c < SIZE; c++)
+		getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+	    break;
+	case WEST:
 	    for (int c = 0; c < SIZE; c++)
 		getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
 	    break;

@@ -28,7 +28,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#getRow()
      */
-    @Override
     public int getRow()
     {
 	return row;
@@ -39,7 +38,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#getColumn()
      */
-    @Override
     public int getColumn()
     {
 	return column;
@@ -62,7 +60,8 @@ public class Position implements IPosition
     {
 	if (this == otherPosition)
 	    return true;
-	if (otherPosition instanceof IPosition other)
+	Position other = null;
+	if (otherPosition instanceof IPosition)
 	    return (this.getRow() == other.getRow() && this.getColumn() == other.getColumn());
 	else
 	    return false;
@@ -73,7 +72,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#isAdjacentTo(battleship.IPosition)
      */
-    @Override
     public boolean isAdjacentTo(IPosition other)
     {
 	return (Math.abs(this.getRow() - other.getRow()) <= 1 && Math.abs(this.getColumn() - other.getColumn()) <= 1);
@@ -84,7 +82,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#occupy()
      */
-    @Override
     public void occupy()
     {
 	isOccupied = true;
@@ -95,7 +92,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#shoot()
      */
-    @Override
     public void shoot()
     {
 	isHit = true;
@@ -106,7 +102,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#isOccupied()
      */
-    @Override
     public boolean isOccupied()
     {
 	return isOccupied;
@@ -117,7 +112,6 @@ public class Position implements IPosition
      * 
      * @see battleship.IPosition#isHit()
      */
-    @Override
     public boolean isHit()
     {
 	return isHit;

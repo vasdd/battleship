@@ -21,11 +21,19 @@ public class Caravel extends Ship
 
 	switch (bearing)
 	{
-	case NORTH, SOUTH:
+	case NORTH:
 	    for (int r = 0; r < SIZE; r++)
 		getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
 	    break;
-	case EAST, WEST:
+	case SOUTH:
+	    for (int r = 0; r < SIZE; r++)
+		getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+	    break;	    
+	case EAST:
+	    for (int c = 0; c < SIZE; c++)
+		getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+	    break;
+	case WEST:
 	    for (int c = 0; c < SIZE; c++)
 		getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
 	    break;
@@ -40,7 +48,6 @@ public class Caravel extends Ship
      * 
      * @see battleship.Ship#getSize()
      */
-    @Override
     public Integer getSize()
     {
 	return SIZE;
