@@ -133,7 +133,6 @@ public class Fleet implements IFleet
      * This operation prints all the ships of a fleet belonging to a particular
      * category
      * 
-     * @param fleet    The fleet of ships
      * @param category The category of ships of interest
      */
     public void printShipsByCategory(String category)
@@ -146,7 +145,6 @@ public class Fleet implements IFleet
     /**
      * This operation prints all the ships of a fleet but not yet shot
      * 
-     * @param fleet The fleet of ships
      */
     public void printFloatingShips()
     {

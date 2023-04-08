@@ -9,8 +9,8 @@ public class Carrack extends Ship
     private static final String NAME = "Nau";
 
     /**
-     * @param bearing
-     * @param pos
+     * @param bearing The bearing of ships of interest
+     * @param pos The position of ships of interest
      */
     public Carrack(Compass bearing, IPosition pos) throws IllegalArgumentException
     {

@@ -9,8 +9,8 @@ public class Frigate extends Ship
     private static final String NAME = "Fragata";
 
     /**
-     * @param bearing
-     * @param pos
+     * @param bearing The bearing of ships of interest
+     * @param pos The position of ships of interest
      */
     public Frigate(Compass bearing, IPosition pos) throws IllegalArgumentException
     {
